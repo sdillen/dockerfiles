@@ -1,0 +1,25 @@
+#!/bin/bash
+
+for GOOS in windows; do
+	for GOARCH in 386 amd64; do
+		echo "Start compiling for $GOOS $GOARCH"
+		export GOOS GOARCH
+		go build -v -o releases/app-$GOOS-$GOARCH
+	done
+done
+
+for GOOS in linux; do
+        for GOARCH in 386 amd64 arm arm64; do
+		echo "Start compiling for $GOOS $GOARCH"
+                export GOOS GOARCH
+                go build -v -o releases/app-$GOOS-$GOARCH
+        done
+done
+
+for GOOS in darwin; do
+        for GOARCH in 386 amd64 arm arm64; do
+		echo "Start compiling for $GOOS $GOARCH"
+                export GOOS GOARCH
+                go build -v -o releases/app-$GOOS-$GOARCH
+        done
+done
