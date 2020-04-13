@@ -1,0 +1,39 @@
+---
+
+version: "3.7"
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    expose:
+      - 53/tcp
+      - 53/udp
+      - 67/udp
+      - 80/tcp
+      - 443/tcp
+    networks:
+      pi-net:
+        ipv4_address: 172.28.1.1
+    environment:
+      TZ: 'Europe/Berlin'
+      WEBPASSWORD: 'pi-hole'
+    volumes:
+      - config:/etc/pihole/
+      - config-dnsmasq:/etc/dnsmasq.d/
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+
+volumes: 
+  config:
+  config-dnsmasq:
+
+networks:
+  pi-net:
+     ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
